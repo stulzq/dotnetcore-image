@@ -15,7 +15,7 @@ pipeline {
       githubPush()
     }
      stages {
-        stage('build-image:2.2.0-aspnetcore-runtime-image') {
+        stage('build-image:2.2.0-aspnetcore-runtime-with-image') {
             steps {
                 sh "cd docker/aspnetcore2.2"
                 sh "./build.sh"
