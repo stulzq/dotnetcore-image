@@ -9,7 +9,7 @@ pipeline {
         }
     }
     environment {
-        NUGET_KEY     = credentials('CanalSharp_Nuget_key')
+        DOCKER_LOGIN     = credentials('docker_login')
     }
     triggers {
       githubPush()
@@ -27,11 +27,16 @@ pipeline {
                 echo "success"
             }
         }
-        stage('push-image:') {
+        stage('push-image') {
             steps {
-                echo "workspace: "
-                sh "pwd"
-                echo "success"
+                sh "docker login $DOCKER_LOGIN"
+                sh "docker logout"
+            }
+        }
+        stage('clear') {
+            steps {
+                sh "history -c"
+                sh "echo > $HOME/.bash_history"
             }
         }
     }
