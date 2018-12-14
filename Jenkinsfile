@@ -24,21 +24,30 @@ pipeline {
 
         stage('build-image:aspnetcore2.2') {
             stages {
-                stage('pull-latest-image') {
+                stage('pull-latest-image:aspnetcore2.2') {
                     steps {
                         sh "docker pull microsoft/dotnet:2.2.0-aspnetcore-runtime"
                     }
                 }
 
-                stage('build-image') {
+                stage('build-image:aspnetcore2.2') {
                     steps {
                         sh "cd docker/aspnetcore2.2;chmod +x build.sh;./build.sh"
                     }
                 }
 
-                stage('push-image') {
+                stage('push-image:aspnetcore2.2') {
                     steps {
                         sh "docker push stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image"
+                    }
+                }
+
+                post { 
+                    success { 
+                        echo 'build image stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image success!'
+                    }
+                    failure { 
+                        echo 'build image stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image failure!'
                     }
                 }
             }
@@ -56,5 +65,6 @@ pipeline {
                 sh "echo > $HOME/.bash_history"
             }
         }
+    }
     }
 }
