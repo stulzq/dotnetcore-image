@@ -25,6 +25,9 @@ pipeline {
         stage('build-image:aspnetcore2.2') {
             stages {
                 stage('pull-latest-image:aspnetcore2.2') {
+                    when {
+                        expression { ciRelease action: 'check' }
+                    }
                     steps {
                         sh "docker pull microsoft/dotnet:2.2.0-aspnetcore-runtime"
                     }
@@ -37,6 +40,9 @@ pipeline {
                 }
 
                 stage('push-image:aspnetcore2.2') {
+                    when {
+                        expression { ciRelease action: 'check' }
+                    }
                     steps {
                         sh "docker push stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image"
                     }
