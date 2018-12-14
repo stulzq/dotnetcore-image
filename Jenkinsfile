@@ -47,34 +47,38 @@ pipeline {
                         sh "docker push stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image"
                     }
                 }
+            }
 
-                post { 
-                    success { 
-                        echo 'build image stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image success!'
-                    }
-                    failure { 
-                        echo 'build image stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image failure!'
-                    }
+            
+            post { 
+                success { 
+                    echo 'build image stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image success!'
+                }
+                failure { 
+                    echo 'build image stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image failure!'
                 }
             }
 
-            timeout(time: 30, unit: 'MINUTES') {
-                echo 'timeout, more than 30min'
+            options {
+                timeout(time: 30, unit: 'MINUTES') {
+                    echo 'timeout, more than 30min'
+                }
             }
         }
 
-        post { 
-            always { 
-                // clear command history
-                sh "history -c"
-                sh "echo > $HOME/.bash_history"
+    }
+    
+    post { 
+        always { 
+            // clear command history
+            sh "history -c"
+            sh "echo > $HOME/.bash_history"
 
-                
-                sh "docker logout" 
+            
+            sh "docker logout" 
 
-                // cleanr workspace
-                deleteDir() 
-            }
+            // cleanr workspace
+            deleteDir() 
         }
     }
 }
