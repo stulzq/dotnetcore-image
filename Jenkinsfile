@@ -23,7 +23,7 @@ pipeline {
         }
         stage('build-image') {
             steps {
-                sh "docker/aspnetcore2.2/build.sh"
+                sh "cd docker/aspnetcore2.2;chmod +x build.sh;build.sh"
                 echo "success"
             }
         }
