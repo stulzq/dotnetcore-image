@@ -60,9 +60,7 @@ pipeline {
             }
 
             options {
-                timeout(time: 30, unit: 'MINUTES') {
-                    echo 'timeout, more than 30min'
-                }
+                timeout(time: 30, unit: 'MINUTES')
             }
         }
 
