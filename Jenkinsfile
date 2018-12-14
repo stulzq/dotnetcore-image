@@ -14,10 +14,10 @@ pipeline {
     triggers {
       githubPush()
     }
-     stages {
+    stages {
         stage('build-image:2.2.0-aspnetcore-runtime-with-image') {
             steps {
-                sh "cd docker/aspnetcore2.2"
+                sh "cd docker/aspnetcore2.2;chmod +x build.sh"
                 sh "./build.sh"
                 echo "build image success"
                 sh "cd $WORKSPACE"
