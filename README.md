@@ -1,4 +1,7 @@
 # awesome-dotnetcore-image
+
+[![Build Status](https://ci2.xcmaster.com/job/awesome-dotnetcore-image/job/master/badge/icon)](https://ci2.xcmaster.com/job/awesome-dotnetcore-image/job/master/)
+
 Solution of .NET Core Generating Pictures on Linux/Docker
 
 ## CentOS 7
