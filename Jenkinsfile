@@ -47,14 +47,14 @@ pipeline {
                         sh "docker push stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image"
                     }
                 }
-            }
 
-            post { 
-                success { 
-                    echo 'build image stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image success!'
-                }
-                failure { 
-                    echo 'build image stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image failure!'
+                post { 
+                    success { 
+                        echo 'build image stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image success!'
+                    }
+                    failure { 
+                        echo 'build image stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image failure!'
+                    }
                 }
             }
 
