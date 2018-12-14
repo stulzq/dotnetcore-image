@@ -15,16 +15,23 @@ pipeline {
       githubPush()
     }
     stages {
-        stage('build-image:2.2.0-aspnetcore-runtime-with-image') {
+        stage('pull-latest-image') {
             steps {
-                sh "cd docker/aspnetcore2.2;chmod +x build.sh;./build.sh"
-                echo "build image success"
+                sh "docker pull microsoft/dotnet:2.2.0-aspnetcore-runtime"
+                echo "success"
+            }
+        }
+        stage('build-image') {
+            steps {
+                sh "docker/aspnetcore2.2/build.sh"
+                echo "success"
             }
         }
         stage('push-image:') {
             steps {
-                echo "workspace: $WORKSPACE"
-                echo "push image success"
+                echo "workspace: "
+                sh "pwd"
+                echo "success"
             }
         }
     }
