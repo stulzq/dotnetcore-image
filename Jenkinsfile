@@ -17,6 +17,9 @@ pipeline {
     stages {
 
         stage('docker-login') {
+            when {
+                expression { ciRelease action: 'check' }
+            }
             steps {
                 sh "docker login $DOCKER_LOGIN"
             }
