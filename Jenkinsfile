@@ -61,13 +61,13 @@ pipeline {
             stages {
                 stage('build-test-image:aspnetcore2.2') {
                     steps {
-                        sh "cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;chmod +x build-image.sh;./build-image.sh"
+                        sh "docker rmi awesomedotnetcoreimagehello;cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;chmod +x build-image.sh;./build-image.sh"
                     }
                 }
                 stage('run-test:aspnetcore2.2') {
                     steps {
                         sh "docker run -d --rm -p 5009:80 --name awesomedotnetcoreimagehello awesomedotnetcoreimagehello"
-                        sh "curl http://localhost:5009/api/values"
+                        sh "sleep 10;curl http://localhost:5009/api/values"
                     }
                 }
                 stage('clear-test:aspnetcore2.2') {
