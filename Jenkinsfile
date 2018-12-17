@@ -10,8 +10,6 @@ def clearDocker(String imagename) {
     if(sh (script: "docker images|grep "+imagename, returnStatus: true)  == 0){
         sh "docker rmi "+imagename
     }
-
-    sh 'docker rm abc'
 }
 
 pipeline {
@@ -50,7 +48,9 @@ pipeline {
 
                 stage('build-image:aspnetcore2.2') {
                     steps {
-                        sh "cd docker/aspnetcore2.2;chmod +x build.sh;./build.sh"
+                        sh "cd docker/aspnetcore2.2;
+                        chmod +x build.sh;
+                        ./build.sh"
                     }
                 }
 
@@ -73,19 +73,22 @@ pipeline {
             stages {
                 stage('build-test-image:aspnetcore2.2') {
                     steps {
-                        clearDocker 'awesomedotnetcoreimagehello'
-                        sh "cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;chmod +x build-image.sh;./build-image.sh"
+                        clearDocker('awesomedotnetcoreimagehello')
+                        sh "cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;
+                        chmod +x build-image.sh;
+                        ./build-image.sh"
                     }
                 }
                 stage('run-test:aspnetcore2.2') {
                     steps {
                         sh "docker run -d --rm -p 5009:80 --name awesomedotnetcoreimagehello awesomedotnetcoreimagehello"
-                        sh "sleep 10;curl http://localhost:5009/api/values"
+                        sleep(time:10,unit:"SECONDS")
+                        sh "curl http://localhost:5009/api/values"
                     }
                 }
                 stage('clear-test:aspnetcore2.2') {
                     steps {
-                        clearDocker 'awesomedotnetcoreimagehello'
+                        clearDocker('awesomedotnetcoreimagehello')
                     }
                 }
             }
