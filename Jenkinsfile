@@ -48,9 +48,11 @@ pipeline {
 
                 stage('build-image:aspnetcore2.2') {
                     steps {
-                        sh "cd docker/aspnetcore2.2;
+                        sh '''
+                        cd docker/aspnetcore2.2;
                         chmod +x build.sh;
-                        ./build.sh"
+                        ./build.sh
+                        '''
                     }
                 }
 
@@ -74,9 +76,11 @@ pipeline {
                 stage('build-test-image:aspnetcore2.2') {
                     steps {
                         clearDocker('awesomedotnetcoreimagehello')
-                        sh "cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;
+                        sh '''
+                        cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;
                         chmod +x build-image.sh;
-                        ./build-image.sh"
+                        ./build-image.sh
+                        '''
                     }
                 }
                 stage('run-test:aspnetcore2.2') {
