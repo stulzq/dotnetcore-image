@@ -61,7 +61,7 @@ pipeline {
             stages {
                 stage('build-test-image:aspnetcore2.2') {
                     steps {
-                        sh "docker rmi awesomedotnetcoreimagehello;cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;chmod +x build-image.sh;./build-image.sh"
+                        sh "cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;chmod +x build-image.sh;./build-image.sh"
                     }
                 }
                 stage('run-test:aspnetcore2.2') {
