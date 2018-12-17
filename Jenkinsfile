@@ -54,7 +54,28 @@ pipeline {
                         '''
                     }
                 }
+                
+                stage('build-image-2.2:test') {
+                    steps {
+                        clearDocker('awesomedotnetcoreimagehello')
+                        //build
+                        sh '''
+                        cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;
+                        export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
+                        dotnet publish -c Release -o ./publish
+                        cd publish
+                        docker build -t awesomedotnetcoreimagehello .
+                        '''
+                        //run test
+                        sh "docker run -d --rm -p 5009:80 --name awesomedotnetcoreimagehello awesomedotnetcoreimagehello"
+                        sleep(time:10,unit:"SECONDS")
+                        sh "curl http://localhost:5009/api/values"
 
+                        //clear
+                        clearDocker('awesomedotnetcoreimagehello')
+                    }
+                }
+                
                 stage('build-image-2.2:push') {
                     when {
                         expression { ciRelease action: 'check' }
@@ -62,34 +83,14 @@ pipeline {
                     steps {
                         sh "docker push stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image"
                     }
+                    options {
+                        timeout(time: 30, unit: 'MINUTES')
+                    }
                 }
             }
-
-            options {
-                timeout(time: 30, unit: 'MINUTES')
-            }
         }
 
-        stage('test-image:2.2') {
-            steps {
-                clearDocker('awesomedotnetcoreimagehello')
-                //build
-                sh '''
-                cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;
-                export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
-                dotnet publish -c Release -o ./publish
-                cd publish
-                docker build -t awesomedotnetcoreimagehello .
-                '''
-                //run test
-                sh "docker run -d --rm -p 5009:80 --name awesomedotnetcoreimagehello awesomedotnetcoreimagehello"
-                sleep(time:10,unit:"SECONDS")
-                sh "curl http://localhost:5009/api/values"
-
-                //clear
-                clearDocker('awesomedotnetcoreimagehello')
-            }
-        }
+        
 
     }
     
