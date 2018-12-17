@@ -2,6 +2,12 @@
 
 library 'JenkinsSharedLibraries'
 
+def clearDocker(String imagename) {
+    sh "docker stop ${imagename}"
+    sh "docker rm ${imagename}"
+    sh "docker rmi ${imagename}"
+}
+
 pipeline {
     agent {
         node {
@@ -61,6 +67,7 @@ pipeline {
             stages {
                 stage('build-test-image:aspnetcore2.2') {
                     steps {
+                        clearDocker 'awesomedotnetcoreimagehello'
                         sh "cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;chmod +x build-image.sh;./build-image.sh"
                     }
                 }
@@ -72,9 +79,7 @@ pipeline {
                 }
                 stage('clear-test:aspnetcore2.2') {
                     steps {
-                        sh "docker stop awesomedotnetcoreimagehello"
-                        sh "docker rm awesomedotnetcoreimagehello"
-                        sh "docker rmi awesomedotnetcoreimagehello"
+                        clearDocker 'awesomedotnetcoreimagehello'
                     }
                 }
             }
