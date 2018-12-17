@@ -48,7 +48,6 @@ pipeline {
 
                 stage('build-image-2.2:build') {
                     steps {
-                        clearDocker('awesomedotnetcoreimagehello')
                         sh '''
                         cd docker/aspnetcore2.2;
                         docker build -t stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image .
