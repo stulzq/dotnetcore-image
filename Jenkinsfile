@@ -3,9 +3,15 @@
 library 'JenkinsSharedLibraries'
 
 def clearDocker(String imagename) {
-    sh "docker stop ${imagename}"
-    sh "docker rm ${imagename}"
-    sh "docker rmi ${imagename}"
+    result = sh (script: "docker ps -a|grep"+imagename, returnStatus: true) 
+    if(result == 0){
+        sh "docker rm -f "+imagename
+    }
+
+    result = sh (script: "docker images|grep"+imagename, returnStatus: true) 
+    if(result == 0){
+        sh "docker rmi "+imagename
+    }
 }
 
 pipeline {
