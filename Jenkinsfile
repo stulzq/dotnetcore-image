@@ -50,8 +50,7 @@ pipeline {
                     steps {
                         sh '''
                         cd docker/aspnetcore2.2;
-                        chmod +x build.sh;
-                        ./build.sh
+                        docker build -t stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image .
                         '''
                     }
                 }
@@ -72,29 +71,25 @@ pipeline {
         }
 
         stage('test-image:aspnetcore2.2') {
-            stages {
-                stage('build-test-image:aspnetcore2.2') {
-                    steps {
-                        clearDocker('awesomedotnetcoreimagehello')
-                        sh '''
-                        cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;
-                        chmod +x build-image.sh;
-                        ./build-image.sh
-                        '''
-                    }
-                }
-                stage('run-test:aspnetcore2.2') {
-                    steps {
-                        sh "docker run -d --rm -p 5009:80 --name awesomedotnetcoreimagehello awesomedotnetcoreimagehello"
-                        sleep(time:10,unit:"SECONDS")
-                        sh "curl http://localhost:5009/api/values"
-                    }
-                }
-                stage('clear-test:aspnetcore2.2') {
-                    steps {
-                        clearDocker('awesomedotnetcoreimagehello')
-                    }
-                }
+            steps {
+                clearDocker('awesomedotnetcoreimagehello')
+                //build
+                sh '''
+                cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;
+                chmod +x build-image.sh;
+                ./build-image.sh
+                export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
+                dotnet publish -c Release -o ./publish
+                cd publish
+                docker build -t awesomedotnetcoreimagehello .
+                '''
+                //run test
+                sh "docker run -d --rm -p 5009:80 --name awesomedotnetcoreimagehello awesomedotnetcoreimagehello"
+                sleep(time:10,unit:"SECONDS")
+                sh "curl http://localhost:5009/api/values"
+
+                //clear
+                clearDocker('awesomedotnetcoreimagehello')
             }
         }
 
