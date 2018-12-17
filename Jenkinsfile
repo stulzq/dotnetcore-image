@@ -76,8 +76,6 @@ pipeline {
                 //build
                 sh '''
                 cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;
-                chmod +x build-image.sh;
-                ./build-image.sh
                 export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
                 dotnet publish -c Release -o ./publish
                 cd publish
