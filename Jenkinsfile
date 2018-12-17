@@ -71,7 +71,7 @@ pipeline {
                         sh "curl http://localhost:5009/api/values"
 
                         //clear
-                        clearDocker('awesomedotnetcoreimagehello')
+                        sh "docker stop awesomedotnetcoreimagehello"
                     }
                 }
 
