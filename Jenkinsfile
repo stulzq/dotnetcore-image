@@ -2,13 +2,9 @@
 
 library 'JenkinsSharedLibraries'
 
-def clearDocker(String imagename) {
+def clearDockerContainer(String imagename) {
     if(sh (script: "docker ps -a|grep "+imagename, returnStatus: true)  == 0){
         sh "docker rm -f "+imagename
-    }
-
-    if(sh (script: "docker images|grep "+imagename, returnStatus: true)  == 0){
-        sh "docker rmi "+imagename
     }
 }
 
@@ -57,6 +53,7 @@ pipeline {
                 
                 stage('build-image-2.2:test') {
                     steps {
+                        clearDockerContainer 'awesomedotnetcoreimagehello'
                         //build
                         sh '''
                         cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;
