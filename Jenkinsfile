@@ -35,9 +35,9 @@ pipeline {
             }
         }
 
-        stage('build-image:aspnetcore2.2') {
+        stage('build-image-2.2') {
             stages {
-                stage('pull-latest-image:aspnetcore2.2') {
+                stage('build-image-2.2:pull-latest') {
                     when {
                         expression { ciRelease action: 'check' }
                     }
@@ -46,7 +46,7 @@ pipeline {
                     }
                 }
 
-                stage('build-image:aspnetcore2.2') {
+                stage('build-image-2.2:build') {
                     steps {
                         sh '''
                         cd docker/aspnetcore2.2;
@@ -55,7 +55,7 @@ pipeline {
                     }
                 }
 
-                stage('push-image:aspnetcore2.2') {
+                stage('build-image-2.2:push') {
                     when {
                         expression { ciRelease action: 'check' }
                     }
@@ -70,7 +70,7 @@ pipeline {
             }
         }
 
-        stage('test-image:aspnetcore2.2') {
+        stage('test-image:2.2') {
             steps {
                 clearDocker('awesomedotnetcoreimagehello')
                 //build
