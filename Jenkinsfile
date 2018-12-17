@@ -6,10 +6,12 @@ def clearDocker(String imagename) {
     if(sh (script: "docker ps -a|grep "+imagename, returnStatus: true)  == 0){
         sh "docker rm -f "+imagename
     }
-    
+
     if(sh (script: "docker images|grep "+imagename, returnStatus: true)  == 0){
         sh "docker rmi "+imagename
     }
+
+    sh 'docker rm abc'
 }
 
 pipeline {
