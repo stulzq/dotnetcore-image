@@ -1,6 +1,6 @@
 # awesome-dotnetcore-image
 
-[![Build Status](https://ci2.xcmaster.com/job/awesome-dotnetcore-image/job/master/badge/icon)](https://ci2.xcmaster.com/job/awesome-dotnetcore-image/job/master/)
+[![Build Status](https://ci2.xcmaster.com/job/awesome-dotnetcore-image/job/master/badge/icon)](https://ci2.xcmaster.com/job/awesome-dotnetcore-image/job/master/) ![](assets/dotnet.svg)
 
 Solution of .NET Core GDI+(Image) on Linux/Docker.
 
@@ -33,3 +33,5 @@ This project builds an ASP.NET Core image to replace the official image(microsof
 ````shell
 FROM stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image
 ````
+
+[Sample](src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello/Dockerfile)

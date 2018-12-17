@@ -52,18 +52,31 @@ pipeline {
                 }
             }
 
-            
-            post { 
-                success { 
-                    echo 'build image stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image success!'
-                }
-                failure { 
-                    echo 'build image stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image failure!'
-                }
-            }
-
             options {
                 timeout(time: 30, unit: 'MINUTES')
+            }
+        }
+
+        stage('test-image:aspnetcore2.2') {
+            stages {
+                stage('build-test-image:aspnetcore2.2') {
+                    steps {
+                        sh "cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;chmod +x build-image.sh;./build-image.sh"
+                    }
+                }
+                stage('run-test:aspnetcore2.2') {
+                    steps {
+                        sh "docker run -d --rm -p 5009:80 --name awesomedotnetcoreimagehello awesomedotnetcoreimagehello"
+                        sh "curl http://localhost:5009/api/values"
+                    }
+                }
+                stage('clear-test:aspnetcore2.2') {
+                    steps {
+                        sh "docker stop awesomedotnetcoreimagehello"
+                        sh "docker rm awesomedotnetcoreimagehello"
+                        sh "docker rmi awesomedotnetcoreimagehello"
+                    }
+                }
             }
         }
 

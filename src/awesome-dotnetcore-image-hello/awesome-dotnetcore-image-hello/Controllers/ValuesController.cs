@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using QRCoder;
 
 namespace awesome_dotnetcore_image_hello.Controllers
 {
@@ -10,36 +14,33 @@ namespace awesome_dotnetcore_image_hello.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public FileResult Get()
         {
-            return new string[] { "value1", "value2" };
+            QRCodeGenerator.ECCLevel eccLevel = QRCodeGenerator.ECCLevel.L;
+            using (QRCodeGenerator qrGenerator = new QRCodeGenerator())
+            {
+                using (QRCodeData qrCodeData = qrGenerator.CreateQrCode("Hello .NET Core", eccLevel))
+                {
+                    using (QRCode qrCode = new QRCode(qrCodeData))
+                    {
+                        Bitmap bp = qrCode.GetGraphic(20, Color.Black, Color.White,true);
+                        return File(Bitmap2Byte(bp), "image/png", "hello-dotnetcore.png");
+                    }
+                }
+            }
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public static byte[] Bitmap2Byte(Bitmap bitmap)
         {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                bitmap.Save(stream, ImageFormat.Jpeg);
+                byte[] data = new byte[stream.Length];
+                stream.Seek(0, SeekOrigin.Begin);
+                stream.Read(data, 0, Convert.ToInt32(stream.Length));
+                return data;
+            }
         }
     }
 }
