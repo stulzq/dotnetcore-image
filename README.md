@@ -7,7 +7,7 @@
 
 Solution of .NET Core GDI+(Image) on Linux/Docker.
 
-.NET Core does not provide an Image, Bitmap, etc. class by default.Microsoft officially provides a component that provides access to GDI+ graphics functionality - `System.Drawing.Common`.This seems to be no abnormal.I believe most people use the Windows to develop applications.If we use `System.Drawing.Common`, we have no problems developing, debugging, and running on Windows.But if we deploy the program to run on Linux, this will get a GDI+ exception,  because we can no longer use GDI+ on Linux. `libgdiplus`(https://github.com/stulzq/awesome-dotnetcore-image) is  C-based implementation of the GDI+ API .We can use it to solve our problem.
+.NET Core does not provide an Image, Bitmap, etc. class by default.Microsoft officially provides a component that provides access to GDI+ graphics functionality - `System.Drawing.Common`.This seems to be no abnormal.I believe most people use the Windows to develop applications.If we use `System.Drawing.Common`, we have no problems developing, debugging, and running on Windows.But if we deploy the program to run on Linux, this will get a GDI+ exception,  because we can no longer use GDI+ on Linux. `libgdiplus`(https://github.com/mono/libgdiplus) is  C-based implementation of the GDI+ API .We can use it to solve our problem.
 
 ## Quick installation libgdiplus 
 
