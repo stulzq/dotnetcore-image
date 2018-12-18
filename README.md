@@ -1,5 +1,7 @@
 # dotnetcore-image
 
+<img src="assets/1545105916728.png" alt=".NET Core" align="right"   />
+
 [![Build Status](https://ci2.xcmaster.com/job/dotnetcore-image/job/master/badge/icon)](https://ci2.xcmaster.com/job/dotnetcore-image/job/master/) 
 ![](https://img.shields.io/docker/pulls/stulzq/dotnet.svg)
 
