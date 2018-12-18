@@ -5,6 +5,7 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <RootNamespace>awesome_dotnetcore_image_hello</RootNamespace>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <AssemblyName>dotnetcore-image-hello</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

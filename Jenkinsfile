@@ -53,22 +53,22 @@ pipeline {
                 
                 stage('build-image-2.2:test') {
                     steps {
-                        clearDockerContainer 'awesomedotnetcoreimagehello'
+                        clearDockerContainer 'dotnetcoreimagehello'
                         //build
                         sh '''
-                        cd src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello;
+                        cd src/dotnetcore-image-hello;
                         export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
                         dotnet publish -c Release -o ./publish
                         cd publish
-                        docker build -t awesomedotnetcoreimagehello .
+                        docker build -t dotnetcoreimagehello .
                         '''
                         //run test
-                        sh "docker run -d --rm -p 5009:80 --name awesomedotnetcoreimagehello awesomedotnetcoreimagehello"
+                        sh "docker run -d --rm -p 5009:80 --name dotnetcoreimagehello dotnetcoreimagehello"
                         sleep(time:10,unit:"SECONDS")
                         sh "curl http://localhost:5009/api/values"
 
                         //clear
-                        sh "docker stop awesomedotnetcoreimagehello"
+                        sh "docker stop dotnetcoreimagehello"
                     }
                 }
 
