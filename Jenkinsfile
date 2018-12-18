@@ -5,7 +5,7 @@ library 'JenkinsSharedLibraries'
 def clearDockerContainer(String containerName) {
     if(sh (script: "docker ps -a|grep "+containerName, returnStatus: true)  == 0){
         sh "docker rm -f "+containerName
-    }
+    } 
 }
 def clearDockerImage(String imageName) {
     if(sh (script: "docker images|grep "+imageName, returnStatus: true)  == 0){
