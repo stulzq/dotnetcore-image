@@ -2,9 +2,14 @@
 
 library 'JenkinsSharedLibraries'
 
-def clearDockerContainer(String imagename) {
-    if(sh (script: "docker ps -a|grep "+imagename, returnStatus: true)  == 0){
-        sh "docker rm -f "+imagename
+def clearDockerContainer(String containerName) {
+    if(sh (script: "docker ps -a|grep "+containerName, returnStatus: true)  == 0){
+        sh "docker rm -f "+containerName
+    }
+}
+def clearDockerImage(String imageName) {
+    if(sh (script: "docker images|grep "+imageName, returnStatus: true)  == 0){
+        sh "docker rmi "+imageName
     }
 }
 
@@ -38,6 +43,7 @@ pipeline {
                         expression { ciRelease action: 'check' }
                     }
                     steps {
+                        clearDockerImage 'microsoft/dotnet:2.2.0-aspnetcore-runtime'
                         sh "docker pull microsoft/dotnet:2.2.0-aspnetcore-runtime"
                     }
                 }
@@ -54,6 +60,7 @@ pipeline {
                 stage('build-image-2.2:test') {
                     steps {
                         clearDockerContainer 'dotnetcoreimagehello'
+                        clearDockerImage 'dotnetcoreimagehello'
                         //build
                         sh '''
                         cd src/dotnetcore-image-hello;
@@ -69,6 +76,7 @@ pipeline {
 
                         //clear
                         sh "docker stop dotnetcoreimagehello"
+                        clearDockerImage 'dotnetcoreimagehello'
                     }
                 }
 
