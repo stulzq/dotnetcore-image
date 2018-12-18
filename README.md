@@ -1,6 +1,7 @@
 # dotnetcore-image
 
-[![Build Status](https://ci2.xcmaster.com/job/dotnetcore-image/job/master/badge/icon)](https://ci2.xcmaster.com/job/dotnetcore-image/job/master/)
+[![Build Status](https://ci2.xcmaster.com/job/dotnetcore-image/job/master/badge/icon)](https://ci2.xcmaster.com/job/dotnetcore-image/job/master/) 
+![](https://img.shields.io/docker/pulls/stulzq/dotnet.svg)
 
 Solution of .NET Core GDI+(Image) on Linux/Docker.
 
