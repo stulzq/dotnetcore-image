@@ -27,7 +27,7 @@ pipeline {
     }
     stages {
 
-        stage('docker-login') {
+        stage('Init') {
             when {
                 expression { ciRelease action: 'check' }
             }
