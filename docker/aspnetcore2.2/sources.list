@@ -1,2 +1,8 @@
-deb http://mirrors.cloud.tencent.com/debian-security jessie/updates mai
-deb-src http://mirrors.cloud.tencent.com/debian-security jessie/updates main
+deb http://mirrors.cloud.tencent.com/debian jessie main contrib non-free
+deb http://mirrors.cloud.tencent.com/debian jessie-updates main contrib non-free
+#deb http://mirrors.cloud.tencent.com/debian jessie-backports main contrib non-free
+#deb http://mirrors.cloud.tencent.com/debian jessie-proposed-updates main contrib non-free
+deb-src http://mirrors.cloud.tencent.com/debian jessie main contrib non-free
+deb-src http://mirrors.cloud.tencent.com/debian jessie-updates main contrib non-free
+#deb-src http://mirrors.cloud.tencent.com/debian jessie-backports main contrib non-free
+#deb-src http://mirrors.cloud.tencent.com/debian jessie-proposed-updates main contrib non-free
