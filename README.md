@@ -38,3 +38,5 @@ FROM stulzq/dotnet:2.2.0-aspnetcore-runtime-with-image
 ````
 
 [Sample](src/awesome-dotnetcore-image-hello/awesome-dotnetcore-image-hello/Dockerfile)
+
+
